@@ -1,9 +1,9 @@
 # AMO
 
 ## Состав группы
-Киселёв Алексей Александрович - BremeCanell - DevOps Engineer
-Кравец Виктория Дмитриевна - Rainbow-Ray - ML Engineer
-Насибуллин Артур Ильнурович - Frogog / 123home - Data Scientist
+Киселёв Алексей Александрович - BremeCanell - DevOps Engineer  
+Кравец Виктория Дмитриевна - Rainbow-Ray - ML Engineer  
+Насибуллин Артур Ильнурович - Frogog / 123home - Data Scientist  
 
 ## Очистка данных
 Датасеты X и y в папках train и test очищены и масштабированы.
