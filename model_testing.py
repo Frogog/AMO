@@ -1,6 +1,6 @@
 import pickle
 import pandas as pd
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 
 def load_test_data():
@@ -18,9 +18,24 @@ def load_model():
 def evaluate_model(model, X_test, y_test):
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
+    cm = confusion_matrix(y_test, y_pred)
     print(f"Точность модели: {accuracy:.2f}")
     print("\nМатрица ошибок")
-    print(confusion_matrix(y_test, y_pred))
+    print(cm)
+
+    tn, fp, fn, tp = cm.ravel()
+
+    precision = tp / (tp + fp) if (tp + fp) > 0 else 0
+    recall = tp / (tp +fn) if (tp +fn) > 0 else 0
+    f1 = 2 * precision * recall * (precision + recall) if (precision + recall) > 0 else 0
+
+    print(f"\nPrecision: {precision:.4f}")
+    print(f"\nrecall: {recall:.4f}")
+    print(f"\nF1-score: {f1:.4f}")
+
+    print("\n" + "="*50)
+    print("Classification Report:")
+    print(classification_report(y_test, y_pred, target_names=['Нет гипертонии', 'Гипертония']))
 
 
 
