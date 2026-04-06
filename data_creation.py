@@ -77,7 +77,39 @@ def generate_all_data(n_parts, n_samples, test_split):
         generate_measurements_data(n_test).to_csv(f"test/test{i}.csv", index=False)
 
 
+def check_folder_data(folder_path, file_name):
+    files = []
+    for i in range(1000):
+        filename = f"{file_name}{i}.csv"
+        file_path = os.path.join(folder_path, filename)
+
+        if os.path.exists(file_path):
+            df = pd.read_csv(file_path)
+            files.append((filename, len(df)))
+
+        if i > 10 and not os.path.exists(file_path):
+            break
+
+    print(f"\n{file_name} файлы:")
+    if files:
+        for filename, rows in files:
+            print(f"   {filename}: {rows} строк")
+
+    return files
+
+
+def check_all_data():
+    print(f"\nПроверка папки с данными для обучения")
+
+    train_files = check_folder_data("train","train")
+    test_files = check_folder_data("test","test")
+
+    total_files = len(train_files) + len(test_files)
+    total_rows = sum(r for _, r in train_files) + sum(r for _, r in test_files)
+    print(f"Статистичка по данным для обучения: {total_files} файлов, {total_rows} строк")
+
 if __name__ == "__main__":
     print("Генерация данных")
     generate_all_data(3, 1000, 0.1)
+    check_all_data()
 
