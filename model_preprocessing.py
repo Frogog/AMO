@@ -10,15 +10,22 @@ import os
 matplotlib.use('TkAgg')
 
 
-
+def print_cleaning_results(IQR, out_l, out_up, df):
+    print(f"IQR: {IQR}")
+    print(f"Количество удаленных выбросов, < Q1: {len(out_l)}")
+    print(f"Количество удаленных выбросов, > Q3: {len(out_up)}")
+    print(f"Всего удалено строк: {len(out_up) + len(out_l) }")
+    print(f"Строк после очистки: {len(df)}")
 
 def IQR_cleaning(df, column):
     Q1 = df[column].quantile(0.25)
     Q3 = df[column].quantile(0.75)
     IQR = Q3 - Q1
+    df_up= df[df[column] > Q3 + (IQR * 1.5)]
+    df_low = df[df[column] < Q1 - (IQR * 1.5)]
     df = df[df[column] <= Q3 + (IQR * 1.5)]
     df = df[df[column] >= Q1 - (IQR * 1.5)]
-
+    print_cleaning_results(IQR, df_low, df_up, df)
     return df
 
 def boxplot(df, column):
